@@ -1,31 +1,30 @@
 require "rails_helper"
 
 describe "The Waiting on section" do
-  it "displays each package delivery description", points: 1, js: true do
-    visit("/user_sign_in")
+  it "displays each package delivery description", points: 1 do
+    
     user_jacob = User.new
     user_jacob.email = "jacob_#{rand(100)}@example.com"
     user_jacob.password = "password"
     user_jacob.save
 
-    visit "/user_sign_in"
+    visit "/users/sign_in"
 
     within(:css, "form") do
       fill_in "Email", with: user_jacob.email
       fill_in "Password", with: user_jacob.password
-      find("button", :text => /Sign in/i ).click
+      click_on "Log in"
     end
 
     visit("/")
 
-    date = 3.days.from_now.to_date
-    formatted_date = date.strftime("%m/%d/%Y")
+    date = 3.days.from_now
 
     within(:css, "form") do
       fill_in "Description", with: "New phone"
-      fill_in "Supposed to arrive on", with: formatted_date
+      fill_in "Supposed to arrive on", with: date
       fill_in "Details", with: "This package is important!"
-      find("button", :text => /Log delivery/ ).click
+      click_on "Log delivery"
     end
   
     within(:css, "div.waiting_on") do
@@ -36,18 +35,18 @@ end
 
 describe "The Waiting on section" do
   it "displays the expected arrival date for each package", points: 1 do
-    visit("/user_sign_in")
+    
     user_jacob = User.new
     user_jacob.email = "jacob_#{rand(100)}@example.com"
     user_jacob.password = "password"
     user_jacob.save
 
-    visit "/user_sign_in"
+    visit "/users/sign_in"
 
     within(:css, "form") do
       fill_in "Email", with: user_jacob.email
       fill_in "Password", with: user_jacob.password
-      find("button", :text => /Sign in/i ).click
+      click_on "Log in"
     end
 
     visit("/")
@@ -56,9 +55,9 @@ describe "The Waiting on section" do
 
     within(:css, "form") do
       fill_in "Description", with: "New phone"
-      fill_in "Supposed to arrive on", with: date.to_s
+      fill_in "Supposed to arrive on", with: date
       fill_in "Details", with: "This package is important!"
-      find("button", :text => /Log delivery/ ).click
+      click_on "Log delivery"
     end
 
     within(:css, "div.waiting_on") do
@@ -68,31 +67,30 @@ describe "The Waiting on section" do
 end
 
 describe "The Waiting on section" do
-  it "has a button to mark a delivery as received with the text 'Mark as received'", points: 1, js: true, hints: h("copy_must_match") do
-    visit("/user_sign_in")
+  it "has a button to mark a delivery as received with the text 'Mark as received'", points: 1, hints: h("copy_must_match") do
+    
     user_jacob = User.new
     user_jacob.email = "jacob_#{rand(100)}@example.com"
     user_jacob.password = "password"
     user_jacob.save
 
-    visit "/user_sign_in"
+    visit "/users/sign_in"
 
     within(:css, "form") do
       fill_in "Email", with: user_jacob.email
       fill_in "Password", with: user_jacob.password
-      find("button", :text => /Sign in/i ).click
+      click_on "Log in"
     end
 
     visit("/")
 
-    date = 3.days.from_now.to_date
-    formatted_date = date.strftime("%m/%d/%Y")
+    date = 3.days.from_now
 
     within(:css, "form") do
       fill_in "Description", with: "New phone"
-      fill_in "Supposed to arrive on", with: formatted_date
+      fill_in "Supposed to arrive on", with: date
       fill_in "Details", with: "This package is important!"
-      find("button", :text => /Log delivery/ ).click
+      click_on "Log delivery"
     end
 
     expect(page).to have_tag("button", :text => /Mark as received/)
@@ -101,33 +99,33 @@ end
 
 describe "The Waiting on section" do
   it "has buttons to move each delivery packages to the \"Received\" section", points: 2 do
-    visit("/user_sign_in")
+    
     user_jacob = User.new
     user_jacob.email = "jacob_#{rand(100)}@example.com"
     user_jacob.password = "password"
     user_jacob.save
 
-    visit "/user_sign_in"
+    visit "/users/sign_in"
 
     within(:css, "form") do
       fill_in "Email", with: user_jacob.email
       fill_in "Password", with: user_jacob.password
-      find("button", :text => /Sign in/i ).click
+      click_on "Log in"
     end
 
     visit("/")
-    date = 3.days.from_now.to_date
-    formatted_date = date.strftime("%m/%d/%Y")
+    
+    date = 3.days.from_now
 
     within(:css, "form") do
       fill_in "Description", with: "New phone"
-      fill_in "Supposed to arrive on", with: date.to_s
+      fill_in "Supposed to arrive on", with: date
       fill_in "Details", with: "This package is important!"
-      find("button", :text => /Log delivery/ ).click
+      click_on "Log delivery"
     end
 
     within(:css, "div.waiting_on") do
-      find("button", :text => /Mark as received/ ).click
+      click_on "Mark as received"
     end
 
     waiting_on_div = find("div.waiting_on")
