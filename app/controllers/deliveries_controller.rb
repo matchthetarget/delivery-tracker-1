@@ -1,14 +1,14 @@
 class DeliveriesController < ApplicationController
   def index
-    @arrived = @current_user.deliveries.
+    @arrived = current_user.deliveries.
       where(arrived: true).
       order(updated_at: :desc)
     
-    @not_arrived = @current_user.deliveries.
+    @not_arrived = current_user.deliveries.
       where.not(arrived: true).
       order(supposed_to_arrive_on: :asc)
 
-    render({ :template => "deliveries/index.html.erb" })
+    render({ :template => "deliveries/index" })
   end
 
   def show
@@ -18,12 +18,12 @@ class DeliveriesController < ApplicationController
 
     @the_delivery = matching_deliveries.at(0)
 
-    render({ :template => "deliveries/show.html.erb" })
+    render({ :template => "deliveries/show" })
   end
 
   def create
     the_delivery = Delivery.new
-    the_delivery.user_id = @current_user.id
+    the_delivery.user_id = current_user.id
     the_delivery.supposed_to_arrive_on = params.fetch("query_supposed_to_arrive_on")
     the_delivery.description = params.fetch("query_description")
     the_delivery.details = params.fetch("query_details")

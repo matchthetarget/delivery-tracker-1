@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Target: Delivery Tracker 1</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -12,6 +13,23 @@
   </head>
 
   <body>
+
+    <nav>
+      <% if current_user.present? %>
+        <a href="/">Delivery Tracker</a>
+        |
+        <a href="/users/edit">Edit profile</a>
+        |
+        <a href="/users/sign_out">Sign out</a>
+      <% else %>
+        <a href="/users/sign_up">Sign up</a>
+        |
+        <a href="/users/sign_in">Sign in</a>
+      <% end %>
+    </nav>
+
+    <hr>
+
     <% if notice.present? %>
       <p><%= notice %></p>
     <% end %>
@@ -20,7 +38,6 @@
       <p><%= alert %></p>
     <% end %>
 
-    
     <%= yield %>
   </body>
 </html>
